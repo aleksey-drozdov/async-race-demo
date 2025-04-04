@@ -16,10 +16,11 @@ class Header {
    * @return {void} This method does not return a value. It sets up the necessary DOM elements and event listeners.
    */
   init() {
-    const menuItems = LINKS.map(({path,title,classes}) =>
+    const menuItems = LINKS.map(({path,title,classes,id}) =>
       elementCreator('a', {
         attributes: {
           href: path,
+          id,
         },
         classes,
         children: title,
@@ -51,6 +52,13 @@ class Header {
     const href = target.getAttribute('href');
 
     if (href) {
+      this.links.forEach(link => {
+        link.classList.remove('active');
+        if (link.id === target.id) {
+          link.classList.add('active');
+        }
+      });
+      console.log({ target });
       this.routeTo(href);
     }
   }

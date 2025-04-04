@@ -1,11 +1,13 @@
-import header from './modules/header';
+import Header from './modules/header';
+import Garage from './modules/garage';
+import Winners from './modules/winners';
 class App {
   constructor() {
     this.init()
   }
 
   init() {
-    header.init();
+    Header.init();
 
     window.addEventListener('changeRoute', () => {
       const currentPath = window.location.pathname;
@@ -25,10 +27,10 @@ class App {
   handleRoute(path: string) {
     switch (path) {
       case '/':
-        console.log('Home page logic executed');
+        Garage.init()
         break;
       case '/winners':
-        console.log('winners page logic executed');
+        Winners.init();
         break;
       default:
         console.log(`No page logic found for: ${path}`);
