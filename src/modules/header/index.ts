@@ -1,5 +1,6 @@
 import { elementCreator } from '../../common/helpers/element-creator.ts';
 import { LINKS } from './data.ts';
+import { changeRouteEvent } from '../../common/events';
 
 class Header {
   links: HTMLElement[] = [];
@@ -63,27 +64,8 @@ class Header {
   routeTo(path: string) {
     // change url
     window.history.pushState({}, '', path);
+    window.dispatchEvent(changeRouteEvent)
 
-    this.handleRoute(path);
-  }
-
-  /**
-   * Handles routing logic based on the given path.
-   *
-   * @param {string} path - The path to route to. It determines which logic to execute.
-   * @return {void} No value is returned from this method.
-   */
-  handleRoute(path: string) {
-    switch (path) {
-      case '/':
-        console.log('Home page logic executed');
-        break;
-      case '/winners':
-        console.log('winners page logic executed');
-        break;
-      default:
-        console.log(`No page logic found for: ${path}`);
-    }
   }
 }
 
