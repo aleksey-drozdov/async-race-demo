@@ -3,12 +3,18 @@ export const LINKS = [
     id: 'garage',
     title: 'garage',
     path: '/',
-    classes: ['active']
+    classes: ['active'],
   },
   {
     id: 'winners',
     title: 'winners',
     path: '/winners',
-    classes: []
-  }
-]
+    classes: [],
+  },
+  {
+    id: 'create-car',
+    title: 'create car',
+    path: '/create-car',
+    classes: [],
+  },
+];

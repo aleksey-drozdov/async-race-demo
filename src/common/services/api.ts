@@ -11,6 +11,16 @@ const API = {
 
     return fetch(`${baseUrl}/garage?${params}`).then(res => res.json());
   },
+
+  createCar: (car: ICar): Promise<TDataWithId<ICar>> => {
+    return fetch(`${baseUrl}/garage`, {
+      method: 'POST',
+      body: JSON.stringify(car),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json());
+  },
 };
 
 export default API;

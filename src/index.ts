@@ -1,5 +1,6 @@
 import Header from './modules/header';
 import Garage from './modules/garage';
+import CreateCar from './modules/create-car';
 import Winners from './modules/winners';
 import { elementCreator } from './common/helpers/element-creator.ts';
 
@@ -40,6 +41,9 @@ class App {
     switch (path) {
       case '/':
         Garage.init(this.contentWrapper);
+        break;
+      case '/create-car':
+        CreateCar.init(this.contentWrapper);
         break;
       case '/winners':
         Winners.init();
