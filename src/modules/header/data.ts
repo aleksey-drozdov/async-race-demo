@@ -12,7 +12,7 @@ export const LINKS = [
     classes: [],
   },
   {
-    id: 'create-car',
+    id: 'createCar',
     title: 'create car',
     path: '/create-car',
     classes: [],

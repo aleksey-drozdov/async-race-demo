@@ -2,21 +2,25 @@ import { elementCreator } from '../../common/helpers/element-creator.ts';
 import API from '../../common/services/api.ts';
 import { ICar } from '../../interfaces/car.ts';
 
-class CreateCar {
+class EditCar {
   modelField?: HTMLInputElement;
   colorField?: HTMLInputElement;
+  id?: string;
 
   constructor() {
   }
 
   /**
-   * Initializes the form by creating and appending input fields and a submit button to the specified wrapper element.
-   * Sets up a click event handler for the submit button.
+   * Initializes the UI form for input fields and attaches event listeners.
+   * Sets up and appends the form components including model input, color input,
+   * and submit button to the specified wrapper element.
    *
-   * @param {HTMLElement} wrapper - The container element where the form will be initialized and rendered.
-   * @return {void} This method does not return any value.
+   * @param {HTMLElement} wrapper - The target HTML element where the form will be rendered.
+   * @param {string} vehicleId - The unique identifier for the vehicle associated with this form.
+   * @return {void} This method does not return a value.
    */
-  init(wrapper: HTMLElement) {
+  init(wrapper: HTMLElement, vehicleId: string) {
+    this.id = vehicleId;
     const modelField = elementCreator('input', {
       attributes: {
         type: 'text',
@@ -76,13 +80,17 @@ class CreateCar {
   async submitHandler() {
     try {
       const data = this.getFormData();
-      await API.createCar(data);
+      if (!this.id) {
+        console.log('no Id');
+        return;
+      }
+      await API.editCar(this.id, data);
     } catch (e) {
       console.error(e);
     }
   }
 }
 
-const createCar = new CreateCar();
+const editCar = new EditCar();
 
-export default createCar;
+export default editCar;

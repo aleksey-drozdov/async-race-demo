@@ -1,8 +1,10 @@
 import Header from './modules/header';
 import Garage from './modules/garage';
 import CreateCar from './modules/create-car';
+import EditCar from './modules/edit-car';
 import Winners from './modules/winners';
 import { elementCreator } from './common/helpers/element-creator.ts';
+import comparePath from './common/helpers/compare-path.ts';
 
 class App {
   headerWrapper: HTMLElement = document.body;
@@ -38,14 +40,20 @@ class App {
    * @return {void} No value is returned from this method.
    */
   handleRoute(path: string) {
-    switch (path) {
-      case '/':
+    comparePath('editCar', path);
+    switch (true) {
+      case comparePath('garage', path):
         Garage.init(this.contentWrapper);
         break;
-      case '/create-car':
+      case comparePath('createCar', path):
         CreateCar.init(this.contentWrapper);
         break;
-      case '/winners':
+      case comparePath('editCar', path): {
+        const id = window.location.pathname.split('/')[1];
+        EditCar.init(this.contentWrapper, id);
+        break;
+      }
+      case comparePath('winners', path):
         Winners.init();
         break;
       default:

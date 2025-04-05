@@ -2,6 +2,7 @@ import API from '../../common/services/api.ts';
 import { TDataWithId } from '../../interfaces/common.ts';
 import { ICar } from '../../interfaces/car.ts';
 import { elementCreator } from '../../common/helpers/element-creator.ts';
+import redirect from '../../common/helpers/redirect.ts';
 
 class Garage {
   cars: TDataWithId<ICar>[] = [];
@@ -48,9 +49,18 @@ class Garage {
         classes: ['colorHEX'],
         children: car.color,
       });
+      const editBtn = elementCreator('button', {
+        children: 'Edit',
+        classes: ['editBtn'],
+      });
+      editBtn.addEventListener('click', () => {
+        redirect('editCar', {
+          id: car.id,
+        });
+      });
       const carWrap = elementCreator('div', {
         classes: ['car'],
-        children: [carModel, carColorBox, carColorHEX],
+        children: [carModel, carColorBox, carColorHEX, editBtn],
       });
       this.carsListWrapper?.appendChild(
         carWrap,

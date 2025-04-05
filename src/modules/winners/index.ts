@@ -1,6 +1,5 @@
 class Winners {
   constructor() {
-    console.log('winners');
   }
 
   init() {

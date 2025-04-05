@@ -21,6 +21,16 @@ const API = {
       },
     }).then(res => res.json());
   },
+
+  editCar: (id: string, car: ICar): Promise<TDataWithId<ICar>> => {
+    return fetch(`${baseUrl}/garage/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(car),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(res => res.json());
+  },
 };
 
 export default API;

@@ -1,6 +1,7 @@
 import { elementCreator } from '../../common/helpers/element-creator.ts';
 import { LINKS } from './data.ts';
-import { changeRouteEvent } from '../../common/custom-events';
+import redirect from '../../common/helpers/redirect.ts';
+import ROUTES from '../../constants/routes.ts';
 
 class Header {
   links: HTMLElement[] = [];
@@ -51,17 +52,16 @@ class Header {
 
     if (!target || target.tagName !== 'A') return;
 
-    const href = target.getAttribute('href');
+    const path = target.id;
 
-    if (href) {
+    if (path) {
       this.links.forEach(link => {
         link.classList.remove('active');
         if (link.id === target.id) {
           link.classList.add('active');
         }
       });
-      console.log({ target });
-      this.routeTo(href);
+      this.routeTo(path as keyof typeof ROUTES);
     }
   }
 
@@ -71,10 +71,9 @@ class Header {
    * @param {string} path - The desired route path to navigate to.
    * @return {void}
    */
-  routeTo(path: string) {
+  routeTo(path: keyof typeof ROUTES) {
     // change url
-    window.history.pushState({}, '', path);
-    window.dispatchEvent(changeRouteEvent);
+    redirect(path);
 
   }
 }
