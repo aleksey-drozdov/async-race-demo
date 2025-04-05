@@ -19,37 +19,44 @@ class EditCar {
    * @param {string} vehicleId - The unique identifier for the vehicle associated with this form.
    * @return {void} This method does not return a value.
    */
-  init(wrapper: HTMLElement, vehicleId: string) {
-    this.id = vehicleId;
-    const modelField = elementCreator('input', {
-      attributes: {
-        type: 'text',
-        placeholder: 'Model',
-      },
-    });
-    const colorField = elementCreator('input', {
-      attributes: {
-        type: 'color',
-        placeholder: 'Color',
-      },
-    });
-    const submitBtn = elementCreator('button', {
-      children: 'Submit',
-    });
-    submitBtn.addEventListener('click', this.submitHandler.bind(this));
+  async init(wrapper: HTMLElement, vehicleId: string) {
+    try {
+      this.id = vehicleId;
+      const carData = await API.getCar(vehicleId);
+      console.log({ carData });
+      const modelField = elementCreator('input', {
+        attributes: {
+          type: 'text',
+          placeholder: 'Model',
+        },
+      });
+      modelField.value = carData.name;
+      const colorField = elementCreator('input', {
+        attributes: {
+          type: 'color',
+          placeholder: 'Color',
+        },
+      });
+      colorField.value = carData.color;
+      const submitBtn = elementCreator('button', {
+        children: 'Submit',
+      });
+      submitBtn.addEventListener('click', this.submitHandler.bind(this));
 
-    this.modelField = modelField;
-    this.colorField = colorField;
+      this.modelField = modelField;
+      this.colorField = colorField;
 
 
-    const content = elementCreator('div', {
-      classes: ['form'],
-      children: [modelField, colorField, submitBtn],
-    });
-    wrapper.innerHTML = '';
-    wrapper.appendChild(content);
+      const content = elementCreator('div', {
+        classes: ['form'],
+        children: [modelField, colorField, submitBtn],
+      });
+      wrapper.innerHTML = '';
+      wrapper.appendChild(content);
+    } catch (e) {
+      console.log(e);
+    }
   }
-
 
   /**
    * Retrieves and constructs car data from the form fields.

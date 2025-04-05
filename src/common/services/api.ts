@@ -31,6 +31,10 @@ const API = {
       },
     }).then(res => res.json());
   },
+
+  getCar: (id: string): Promise<TDataWithId<ICar>> => {
+    return fetch(`${baseUrl}/garage/${id}`).then(res => res.json());
+  },
 };
 
 export default API;
