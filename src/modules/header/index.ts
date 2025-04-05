@@ -1,11 +1,12 @@
 import { elementCreator } from '../../common/helpers/element-creator.ts';
 import { LINKS } from './data.ts';
-import { changeRouteEvent } from '../../common/events';
+import { changeRouteEvent } from '../../common/custom-events';
 
 class Header {
   links: HTMLElement[] = [];
+
   constructor() {
-    this.linkHandler = this.linkHandler.bind(this)
+    this.linkHandler = this.linkHandler.bind(this);
   }
 
   /**
@@ -15,8 +16,8 @@ class Header {
    *
    * @return {void} This method does not return a value. It sets up the necessary DOM elements and event listeners.
    */
-  init() {
-    const menuItems = LINKS.map(({path,title,classes,id}) =>
+  init(wrapper: HTMLElement) {
+    const menuItems = LINKS.map(({ path, title, classes, id }) =>
       elementCreator('a', {
         attributes: {
           href: path,
@@ -24,16 +25,17 @@ class Header {
         },
         classes,
         children: title,
-      }))
+      }));
     this.links = menuItems;
 
 
-    const header = elementCreator('header', {
-      children: menuItems
-    })
-    header.addEventListener('click', this.linkHandler)
+    const header = elementCreator('div', {
+      children: menuItems,
+      classes: ['header'],
+    });
+    header.addEventListener('click', this.linkHandler);
 
-    document.body.appendChild(header);
+    wrapper.appendChild(header);
   }
 
   /**
@@ -72,7 +74,7 @@ class Header {
   routeTo(path: string) {
     // change url
     window.history.pushState({}, '', path);
-    window.dispatchEvent(changeRouteEvent)
+    window.dispatchEvent(changeRouteEvent);
 
   }
 }

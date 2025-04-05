@@ -1,8 +1,9 @@
 class Winners {
-  constructor() {}
+  constructor() {
+    console.log('winners');
+  }
 
   init() {
-    console.log('winners initialized');
   }
 }
 

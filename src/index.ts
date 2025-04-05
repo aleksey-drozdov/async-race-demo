@@ -1,13 +1,25 @@
 import Header from './modules/header';
 import Garage from './modules/garage';
 import Winners from './modules/winners';
+import { elementCreator } from './common/helpers/element-creator.ts';
+
 class App {
+  headerWrapper: HTMLElement = document.body;
+  contentWrapper: HTMLElement = document.body;
+
   constructor() {
-    this.init()
+    this.init();
   }
 
   init() {
-    Header.init();
+    const headerWrapper = elementCreator('header');
+    const contentWrapper = elementCreator('main');
+    this.headerWrapper = headerWrapper;
+    this.contentWrapper = contentWrapper;
+    document.body.appendChild(headerWrapper);
+    document.body.appendChild(contentWrapper);
+
+    Header.init(this.headerWrapper);
 
     window.addEventListener('changeRoute', () => {
       const currentPath = window.location.pathname;
@@ -27,7 +39,7 @@ class App {
   handleRoute(path: string) {
     switch (path) {
       case '/':
-        Garage.init()
+        Garage.init(this.contentWrapper);
         break;
       case '/winners':
         Winners.init();
