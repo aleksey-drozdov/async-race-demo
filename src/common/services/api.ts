@@ -35,6 +35,12 @@ const API = {
   getCar: (id: string): Promise<TDataWithId<ICar>> => {
     return fetch(`${baseUrl}/garage/${id}`).then(res => res.json());
   },
+
+  deleteCar: (id: string): Promise<TDataWithId<ICar>> => {
+    return fetch(`${baseUrl}/garage/${id}`, {
+      method: 'DELETE',
+    }).then(res => res.json());
+  },
 };
 
 export default API;

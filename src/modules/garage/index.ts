@@ -34,6 +34,11 @@ class Garage {
   }
 
   drawCars() {
+    if (!this.carsListWrapper) {
+      return;
+    }
+
+    this.carsListWrapper.innerHTML = '';
     this.cars.forEach(car => {
       const carModel = elementCreator('span', {
         classes: ['model'],
@@ -58,14 +63,26 @@ class Garage {
           id: car.id,
         });
       });
+      const deleteBtn = elementCreator('button', {
+        children: 'Delete',
+        classes: ['deleteBtn'],
+      });
+      deleteBtn.addEventListener('click', () => {
+        this.deleteCarHandler(car.id);
+      });
       const carWrap = elementCreator('div', {
         classes: ['car'],
-        children: [carModel, carColorBox, carColorHEX, editBtn],
+        children: [carModel, carColorBox, carColorHEX, editBtn, deleteBtn],
       });
       this.carsListWrapper?.appendChild(
         carWrap,
       );
     });
+  }
+
+  async deleteCarHandler(id: string) {
+    await API.deleteCar(id);
+    this.getCars();
   }
 }
 
